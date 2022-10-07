@@ -1,24 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, Container, } from "@mui/material";
+import Main from "./Main";
+import Navbar from "./Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box >
+      <Navbar />
+      <Container sx={{ mt: 5 }}>
+        <Main />
+      </Container>
+    </Box>
   );
 }
 
