@@ -1,6 +1,7 @@
 import { Movie } from '@mui/icons-material'
 import { AppBar, Container, Toolbar, styled, Typography, Box, InputBase, Button, IconButton, Avatar, Menu, MenuItem } from '@mui/material'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const StyledToolbar = styled(Toolbar)({
     display: 'flex',
@@ -36,20 +37,27 @@ function Navbar() {
             <Container>
 
                 <StyledToolbar>
-                    <Typography variant='h6' sx={{ display: { xs: "none", sm: "flex", alignItems: "center" } }}>
-                        <Movie />  movieDB
-                    </Typography>
+                    <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                        <Typography variant='h6' sx={{ display: { xs: "none", sm: "flex", alignItems: "center" } }}>
+                            <Movie />  movieDB
+                        </Typography>
+                    </Link>
                     <Movie sx={{ display: { xs: "block", sm: "none" } }} />
                     <Search>
                         <InputBase placeholder='search...' />
                     </Search>
                     <Icons sx={{ display: { xs: "none", sm: "flex" } }}>
                         <IconButton>
-                            <Button variant="contained" color='success'>SignIn</Button>
+                            <Link to="/signin" style={{ textDecoration: "none", color: "inherit" }}>
+                                <Button variant="contained" color='success'>SignIn</Button>
+                            </Link>
                         </IconButton>
                         <IconButton>
-                            <Button variant="contained" color='warning'>SignUp</Button>
+                            <Link to="/signup" style={{ textDecoration: "none", color: "inherit" }}>
+                                <Button variant="contained" color='warning'>SignUp</Button>
+                            </Link>
                         </IconButton>
+
                     </Icons>
                     <UserBox sx={{ display: { xs: "flex", sm: "none" } }}>
                         <Avatar onClick={(e) => setOpen(true)} />
@@ -71,8 +79,12 @@ function Navbar() {
                         horizontal: 'right',
                     }}
                 >
-                    <MenuItem >Profile</MenuItem>
-                    <MenuItem >My List</MenuItem>
+                    <Link to="/profile" style={{ textDecoration: "none", color: "inherit" }}>
+                        <MenuItem >Profile</MenuItem>
+                    </Link>
+                    <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                        <MenuItem >Home</MenuItem>
+                    </Link>
                     <MenuItem >Logout</MenuItem>
                 </Menu>
             </Container>
