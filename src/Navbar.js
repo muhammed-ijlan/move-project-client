@@ -1,7 +1,9 @@
 import { Movie } from '@mui/icons-material'
 import { AppBar, Container, Toolbar, styled, Typography, Box, InputBase, Button, IconButton, Avatar, Menu, MenuItem } from '@mui/material'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { logOut } from './redux/userSlice';
 
 const StyledToolbar = styled(Toolbar)({
     display: 'flex',
@@ -21,7 +23,6 @@ const Icons = styled(Box)({
     borderRadius: "5px",
     display: "flex",
     alignItems: "center"
-    // padding: "5px"
 })
 
 const UserBox = styled(Box)({
@@ -31,7 +32,14 @@ const UserBox = styled(Box)({
 })
 
 function Navbar() {
-    const [open, setOpen] = useState(false)
+    const { currentUser } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const logoutHandler = () => {
+        dispatch(logOut())
+        navigate("/signin")
+    }
     return (
         <AppBar sx={{ background: "#06283D" }} position="sticky">
             <Container>
@@ -46,47 +54,45 @@ function Navbar() {
                     <Search>
                         <InputBase placeholder='search...' />
                     </Search>
-                    <Icons sx={{ display: { xs: "none", sm: "flex" } }}>
-                        <IconButton>
-                            <Link to="/signin" style={{ textDecoration: "none", color: "inherit" }}>
-                                <Button variant="contained" color='success'>SignIn</Button>
-                            </Link>
-                        </IconButton>
-                        <IconButton>
-                            <Link to="/signup" style={{ textDecoration: "none", color: "inherit" }}>
-                                <Button variant="contained" color='warning'>SignUp</Button>
-                            </Link>
-                        </IconButton>
+                    {currentUser ?
+                        <>
+                            <Icons sx={{ display: { xs: "none", sm: "flex" } }}>
+                                <IconButton>
+                                    <Link to="/signin" style={{ textDecoration: "none", color: "inherit" }}>
+                                        <Button onClick={logoutHandler} variant="contained" color='error'>Logout</Button>
+                                    </Link>
+                                </IconButton>
 
-                    </Icons>
-                    <UserBox sx={{ display: { xs: "flex", sm: "none" } }}>
-                        <Avatar onClick={(e) => setOpen(true)} />
-                        <Typography variant='span'>John</Typography>
+                            </Icons>
+                            <Link to="/profile" style={{ textDecoration: "none", color: "inherit" }}>
+                                <UserBox sx={{ display: { xs: "none", sm: "flex" } }}>
+                                    <Avatar />
+                                    <Typography variant='span'>{currentUser?.fullname}</Typography>
+                                </UserBox>
+                            </Link>
+                        </>
+                        :
+                        <Icons sx={{ display: { xs: "none", sm: "flex" } }}>
+                            <IconButton>
+                                <Link to="/signin" style={{ textDecoration: "none", color: "inherit" }}>
+                                    <Button variant="contained" color='success'>SignIn</Button>
+                                </Link>
+                            </IconButton>
+                            <IconButton>
+                                <Link to="/signup" style={{ textDecoration: "none", color: "inherit" }}>
+                                    <Button variant="contained" color='warning'>SignUp</Button>
+                                </Link>
+                            </IconButton>
+
+                        </Icons>
+                    }
+                    <UserBox sx={{ display: { sm: "none", xs: "flex" } }}>
+                        <Avatar />
+                        <Typography variant='span'>{currentUser?.fullname}</Typography>
                     </UserBox>
                 </StyledToolbar>
 
-                <Menu
-                    id="demo-positioned-menu"
-                    aria-labelledby="demo-positioned-button"
-                    open={open}
-                    onClose={(e) => setOpen(false)}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                >
-                    <Link to="/profile" style={{ textDecoration: "none", color: "inherit" }}>
-                        <MenuItem >Profile</MenuItem>
-                    </Link>
-                    <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-                        <MenuItem >Home</MenuItem>
-                    </Link>
-                    <MenuItem >Logout</MenuItem>
-                </Menu>
+
             </Container>
         </AppBar>
     )

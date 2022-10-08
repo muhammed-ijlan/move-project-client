@@ -1,12 +1,9 @@
 import { Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice'
-
-
-
 
 function Signin() {
 
@@ -14,9 +11,9 @@ function Signin() {
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { isLoading, currentUser } = useSelector((state) => state.user)
-    console.log(currentUser);
 
     const signUser = async (e) => {
         e.preventDefault();
@@ -24,6 +21,7 @@ function Signin() {
             dispatch(loginStart())
             const res = await axios.post("http://localhost:4000/auth/signin", { email, password })
             dispatch(loginSuccess(res.data.user))
+            navigate("/")
 
         } catch (e) {
             console.log(e);
