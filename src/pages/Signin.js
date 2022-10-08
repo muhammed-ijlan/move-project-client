@@ -16,6 +16,7 @@ function Signin() {
     const dispatch = useDispatch();
 
     const { isLoading, currentUser } = useSelector((state) => state.user)
+    console.log(currentUser);
 
     const signUser = async (e) => {
         e.preventDefault();
@@ -43,7 +44,6 @@ function Signin() {
                         <TextField required helperText="" onChange={(e) => setPassword(e.target.value)} fullWidth color='info' name='password' type="password" label="Password" id="fullWidth" />
                         {isLoading && <Button type='submit' variant='contained' color='success' fullWidth>Loading...</Button>}
                         {!isLoading && <Button type='submit' variant='contained' color='success' fullWidth>LogiIn</Button>}
-
                     </Stack>
                 </form>
                 <Typography variant='body2' marginTop={1}>Dont Have an Account? <Link to="/signup">SignUp</Link></Typography>
