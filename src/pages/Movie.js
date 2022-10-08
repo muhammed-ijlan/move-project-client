@@ -1,5 +1,4 @@
-import { PlayArrow, SkipNext, SkipPrevious } from '@mui/icons-material'
-import { Box, Button, Card, CardContent, CardMedia, IconButton, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import React from 'react'
 
 function Movie() {

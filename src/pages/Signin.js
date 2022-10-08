@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 function Signin() {
     return (
         <Grid container>
-            <Paper elevation={10} sx={{ padding: "20px", height: "42vh", width: "300px", margin: "auto", borderRadius: "10px" }}>
+            <Paper elevation={10} sx={{ padding: "20px", height: "45vh", width: "300px", margin: "auto", borderRadius: "10px" }}>
                 <Stack display='flex' alignItems="center">
                     <Typography variant='h5'>SignIn</Typography>
                 </Stack>

@@ -1,23 +1,31 @@
-import { Box, Container, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import React from 'react'
 import MovieCard from './Card'
 import { Link } from "react-router-dom"
+import "./App.css"
 
 function Main() {
     return (
+        <div className='card_wrapper'>
 
-        <Grid spacing={2}
-            container justifyContent='center'>
-            <Link to="/movie">
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
+            <MovieCard />
 
-                <Grid item xs={10} sm={4} md={4}><MovieCard /></Grid>
-            </Link>
-            <Grid item xs={10} sm={4} md={4}><MovieCard /></Grid>
-            <Grid item xs={10} sm={4} md={4}><MovieCard /></Grid>
-            <Grid item xs={10} sm={4} md={4}><MovieCard /></Grid>
-            <Grid item xs={10} sm={4} md={4}><MovieCard /></Grid>
-        </Grid >
-
+        </div>
     )
 }
 

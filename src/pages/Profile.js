@@ -1,5 +1,4 @@
 import { Stack, Paper, Avatar, Typography, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Card, CardActionArea, CardMedia, CardContent } from '@mui/material'
-import { display } from '@mui/system'
 import React from 'react'
 
 function Profile() {
