@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice'
+import { loginFailure, loginStart, loginSuccess, } from '../redux/userSlice'
 
 function Signin() {
 
@@ -21,6 +21,7 @@ function Signin() {
             dispatch(loginStart())
             const res = await axios.post("http://localhost:4000/auth/signin", { email, password })
             dispatch(loginSuccess(res.data.user))
+            localStorage.setItem("token", res.data.token)
             navigate("/")
 
         } catch (e) {

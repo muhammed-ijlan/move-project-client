@@ -1,28 +1,47 @@
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import "./App.css"
 import axios from "axios"
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMovieFailure, fetchMovieStart, fetchMovieSuccess } from "./redux/movieSlice"
+import { Link } from "react-router-dom"
 
 
 function MovieCard() {
 
+    const dispatch = useDispatch();
+    const { movies } = useSelector((state) => state.movie)
+
+
     useEffect(() => {
         const fetchMovies = async () => {
-            const res = await axios.get("http://localhost:4000/movie")
-            console.log(res.data);
+            try {
+                dispatch(fetchMovieStart())
+                const res = await axios.get("http://localhost:4000/movie")
+                dispatch(fetchMovieSuccess(res.data.movie))
+            } catch (e) {
+                console.log(e);
+                dispatch(fetchMovieFailure())
+            }
         }
         fetchMovies();
-
     }, [])
-
     return (
-        <div className='card'>
-            <div className='card_body'>
-                <img className='card_img' src='https://img.fruugo.com/product/9/75/101193759_max.jpg' />
-                <Typography py={1} px={2} variant='h5'>Joker</Typography>
-            </div>
-            <button className='card_btn'>View Movie</button>
-        </div>
+        <>
+            {
+                movies?.map((movie) => (
+                    <Link to={`movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <div className='card'>
+                            <div className='card_body'>
+                                <img className='card_img' alt='movieImage' src={movie.image} />
+                                <Typography py={1} px={2} variant='h5'>{movie.movieName}</Typography>
+                            </div>
+                            <button className='card_btn'>View Movie</button>
+                        </div>
+                    </Link>
+                ))
+            }
+        </>
     )
 }
 

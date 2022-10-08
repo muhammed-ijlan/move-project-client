@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     movies: null,
     isLoading: false,
+    currentMovie: []
 }
 
 const movieSlice = createSlice({
@@ -18,9 +19,12 @@ const movieSlice = createSlice({
         },
         fetchMovieFailure: (state) => {
             state.isLoading = false;
+        },
+        fetchCurrentMovie: (state, action) => {
+            state.currentMovie = action.payload
         }
     }
 })
 
-export const { fetchMovieFailure, fetchMovieStart, fetchMovieSuccess } = movieSlice.actions
+export const { fetchMovieFailure, fetchMovieStart, fetchMovieSuccess, fetchCurrentMovie } = movieSlice.actions
 export default movieSlice.reducer;

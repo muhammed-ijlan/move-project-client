@@ -38,8 +38,10 @@ function Navbar() {
 
     const logoutHandler = () => {
         dispatch(logOut())
+        localStorage.clear();
         navigate("/signin")
     }
+
     return (
         <AppBar sx={{ background: "#06283D" }} position="sticky">
             <Container>
