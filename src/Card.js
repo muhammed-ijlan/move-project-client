@@ -1,7 +1,20 @@
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./App.css"
+import axios from "axios"
+
+
 function MovieCard() {
+
+    useEffect(() => {
+        const fetchMovies = async () => {
+            const res = await axios.get("http://localhost:4000/movie")
+            console.log(res.data);
+        }
+        fetchMovies();
+
+    }, [])
+
     return (
         <div className='card'>
             <div className='card_body'>
