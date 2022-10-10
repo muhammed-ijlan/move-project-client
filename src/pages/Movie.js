@@ -18,7 +18,11 @@ function Movie() {
 
     }, [id])
 
-    console.log(movie);
+    const addToListHandler = async () => {
+        const res = await axios.put(`http://localhost:4000/movie/like/${id}`)
+        console.log(res.data);
+    }
+
     return (
         <Card sx={{ display: 'flex' }}>
             {/* <div> */}
@@ -30,7 +34,7 @@ function Movie() {
                     <Typography variant="subtitle1" color="text.secondary" component="div">
                         {movie.desc}
                     </Typography>
-                    <Button variant='contained' sx={{ mt: "100px" }}>Add to my list</Button>
+                    <Button onClick={addToListHandler} variant='contained' sx={{ mt: "100px" }}>Add to my list</Button>
                 </CardContent>
             </Box>
             <CardMedia

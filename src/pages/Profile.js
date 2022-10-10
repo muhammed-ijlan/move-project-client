@@ -12,15 +12,14 @@ function Profile() {
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`http://localhost:4000/user/${id}`)
-            const movielistRes = await axios.get("http://localhost:4000/user/movies/list")
 
+            const movielistRes = await axios.get("http://localhost:4000/user/movies/list")
             setUserdata(res.data);
-            setUserdata(movielistRes.data)
-            console.log(movielistRes);
+            setMovieList(movielistRes.data)
         }
         fetchUser();
     }, [id])
-
+    console.log(movieList);
     return (
         <Stack>
 
@@ -53,9 +52,9 @@ function Profile() {
             {/* CARD */}
             <Stack spacing={2} display="flex" direction="row">
 
-                <Stack>
-                    {
-                        movieList.map((movie) => (
+                {
+                    movieList.map((movie) => (
+                        <Stack>
                             <Card sx={{ maxWidth: 200 }}>
                                 <CardActionArea>
                                     <CardMedia
@@ -70,9 +69,9 @@ function Profile() {
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
-                        ))
-                    }
-                </Stack>
+                        </Stack>
+                    ))
+                }
 
             </Stack>
         </Stack >
