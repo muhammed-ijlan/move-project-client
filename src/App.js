@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route path="/">
               <Route index element={<Main />} />
-              <Route path="profile" element={<Profile />} />
+              <Route path="user/:id" element={<Profile />} />
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
               <Route path="movie/:id" element={<Movie />} />
