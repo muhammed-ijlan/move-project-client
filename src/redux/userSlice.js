@@ -28,11 +28,18 @@ const userSlice = createSlice({
         },
         setToken: (state, action) => {
             state.token = action.payload;
+        },
+        addToList: (state, action) => {
+            if (state.currentUser.movieList.includes(action.payload)) {
+                state.currentUser.movieList.splice(state.currentUser.movieList.findIndex((id) => id === action.payload), 1)
+            } else {
+                state.currentUser.movieList.push(action.payload)
+            }
         }
 
     }
 
 })
 
-export const { loginFailure, loginStart, loginSuccess, logOut, setToken } = userSlice.actions;
+export const { loginFailure, loginStart, loginSuccess, logOut, setToken, addToList } = userSlice.actions;
 export default userSlice.reducer;

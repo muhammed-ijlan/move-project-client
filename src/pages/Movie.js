@@ -2,6 +2,9 @@ import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/mate
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { fetchCurrentMovie } from '../redux/movieSlice'
+import { addToList } from '../redux/userSlice'
 
 
 function Movie() {
@@ -9,23 +12,35 @@ function Movie() {
     const { id } = useParams()
     const [movie, setMovie] = useState({})
 
+    const { currentUser } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
     useEffect(() => {
         const fetchMovie = async () => {
             const res = await axios.get(`http://localhost:4000/movie/${id}`)
             setMovie(res.data)
+            dispatch(fetchCurrentMovie(res.data))
         }
         fetchMovie()
 
-    }, [id])
+    }, [id, dispatch,])
+
 
     const addToListHandler = async () => {
-        const res = await axios.put(`http://localhost:4000/movie/like/${id}`)
-        console.log(res.data);
+        currentUser.movieList.includes(id) ?
+            await axios.put(`http://localhost:4000/movie/dislike/${id}`)
+            :
+            await axios.put(`http://localhost:4000/movie/like/${id}`)
+        dispatch(addToList(id))
+
     }
 
+
+
+
+    console.log(currentUser);
     return (
         <Card sx={{ display: 'flex' }}>
-            {/* <div> */}
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                     <Typography component="div" variant="h2">
@@ -34,7 +49,12 @@ function Movie() {
                     <Typography variant="subtitle1" color="text.secondary" component="div">
                         {movie.desc}
                     </Typography>
-                    <Button onClick={addToListHandler} variant='contained' sx={{ mt: "100px" }}>Add to my list</Button>
+
+                    <Button onClick={addToListHandler} variant='contained' color='warning' sx={{ mt: "100px" }}>{currentUser.movieList.includes(id) ? "Remove From List" : "Add to List"}</Button>
+
+
+
+
                 </CardContent>
             </Box>
             <CardMedia
@@ -43,7 +63,6 @@ function Movie() {
                 image={movie.image}
                 alt="Live from space album cover"
             />
-            {/* </div> */}
         </Card>
     )
 }

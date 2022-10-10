@@ -19,7 +19,7 @@ function App() {
 
             <Route path="/">
               <Route index element={<Main />} />
-              <Route path="user/:id" element={<Profile />} />
+              <Route path="user/:id" element={currentUser ? <Profile /> : <SignIn />} />
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
               <Route path="movie/:id" element={currentUser ? <Movie /> : <SignIn />} />
