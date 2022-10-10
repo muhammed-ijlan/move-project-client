@@ -43,3 +43,10 @@
   color: white;
   background-color: rgb(42, 42, 42);
 }
+.main-page {
+  height: 120vh;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: center;
+}

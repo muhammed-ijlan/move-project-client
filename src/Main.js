@@ -1,16 +1,16 @@
-import { Grid } from '@mui/material'
-import React from 'react'
+import { Grid, Pagination } from '@mui/material'
+import React, { useState } from 'react'
 import MovieCard from './Card'
-import { Link } from "react-router-dom"
 import "./App.css"
 
 function Main() {
+
     return (
-        <div className='card_wrapper'>
 
+        <div>
             <MovieCard />
-
         </div>
+
     )
 }
 
