@@ -15,18 +15,14 @@ function MovieCard() {
     const dispatch = useDispatch();
     const { movies } = useSelector((state) => state.movie)
 
-
     useEffect(() => {
         const fetchMovies = async () => {
             try {
                 dispatch(fetchMovieStart())
                 const res = await axios.get(`http://localhost:4000/movie/?limit=${limit}&page=${page}`)
                 dispatch(fetchMovieSuccess(res.data.movie))
-                console.log(res.data);
                 setLimit(res.data.limit)
                 setCount(Math.round(res.data.total / limit))
-
-
             } catch (e) {
                 console.log(e);
                 dispatch(fetchMovieFailure())
@@ -36,9 +32,8 @@ function MovieCard() {
     }, [limit, page])
     return (
         <div className=''>
-
             <div className='card_wrapper'>
-                {
+                {Array.isArray(movies) &&
                     movies?.map((movie) => (
                         <Link to={`movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
                             <div className='card'>
@@ -53,10 +48,8 @@ function MovieCard() {
                 }
             </div>
             <div style={{ padding: "100px" }}>
-
                 <Pagination sx={{ marginLeft: '400px' }} onChange={(e, value) => setPage(value)} count={count} page={page} variant="outlined" size='large' />
             </div>
-
         </div>
     )
 }

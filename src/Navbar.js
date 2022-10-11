@@ -1,8 +1,10 @@
 import { Movie } from '@mui/icons-material'
 import { AppBar, Container, Toolbar, styled, Typography, Box, InputBase, Button, IconButton, Avatar, Menu, MenuItem } from '@mui/material'
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { fetchMovieSuccess } from './redux/movieSlice';
 import { logOut } from './redux/userSlice';
 
 const StyledToolbar = styled(Toolbar)({
@@ -32,9 +34,20 @@ const UserBox = styled(Box)({
 })
 
 function Navbar() {
+    const [input, setInput] = useState("")
+
     const { currentUser } = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+
+    useEffect(() => {
+        const fetchMovie = async () => {
+            const res = await axios.get(`http://localhost:4000/movie/?search=${input}`)
+            dispatch(fetchMovieSuccess(res.data.movie));
+        }
+        fetchMovie();
+    }, [input, dispatch])
 
     const logoutHandler = () => {
         dispatch(logOut())
@@ -54,7 +67,7 @@ function Navbar() {
                     </Link>
                     <Movie sx={{ display: { xs: "block", sm: "none" } }} />
                     <Search>
-                        <InputBase placeholder='search...' />
+                        <InputBase onChange={(e) => setInput(e.target.value)} placeholder='search...' />
                     </Search>
                     {currentUser ?
                         <>

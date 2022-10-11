@@ -6,7 +6,6 @@ import "./App.css"
 function Main() {
 
     return (
-
         <div>
             <MovieCard />
         </div>

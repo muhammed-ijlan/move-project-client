@@ -19,7 +19,6 @@ function Profile() {
         }
         fetchUser();
     }, [id])
-    console.log(movieList);
     return (
         <Stack>
 
@@ -52,7 +51,7 @@ function Profile() {
             {/* CARD */}
             <Stack spacing={2} display="flex" direction="row">
 
-                {
+                {Array.isArray(movieList) &&
                     movieList.map((movie) => (
                         <Stack>
                             <Card sx={{ maxWidth: 200 }}>

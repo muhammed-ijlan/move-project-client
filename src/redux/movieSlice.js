@@ -20,11 +20,8 @@ const movieSlice = createSlice({
         fetchMovieFailure: (state) => {
             state.isLoading = false;
         },
-        fetchCurrentMovie: (state, action) => {
-            state.currentMovie = action.payload
-        }
     }
 })
 
-export const { fetchMovieFailure, fetchMovieStart, fetchMovieSuccess, fetchCurrentMovie } = movieSlice.actions
+export const { fetchMovieFailure, fetchMovieStart, fetchMovieSuccess } = movieSlice.actions
 export default movieSlice.reducer;
