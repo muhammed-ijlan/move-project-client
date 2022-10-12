@@ -49,7 +49,9 @@ function Navbar() {
         fetchMovie();
     }, [input, dispatch])
 
-    const logoutHandler = () => {
+    const logoutHandler = async () => {
+        await axios.get("http://localhost:4000/auth/logout")
+
         dispatch(logOut())
         localStorage.clear();
         navigate("/signin")

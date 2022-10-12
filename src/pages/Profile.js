@@ -11,9 +11,13 @@ function Profile() {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`http://localhost:4000/user/${id}`)
+            const res = await axios.get(`http://localhost:4000/user/${id}`, {
+                withCredentials: true
+            })
 
-            const movielistRes = await axios.get("http://localhost:4000/user/movies/list")
+            const movielistRes = await axios.get("http://localhost:4000/user/movies/list", {
+                withCredentials: true
+            })
             setUserdata(res.data);
             setMovieList(movielistRes.data)
         }

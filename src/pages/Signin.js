@@ -19,9 +19,11 @@ function Signin() {
         e.preventDefault();
         try {
             dispatch(loginStart())
-            const res = await axios.post("http://localhost:4000/auth/signin", { email, password })
+            const res = await axios.post("http://localhost:4000/auth/signin", { email, password },
+                { withCredentials: true }
+            )
             dispatch(loginSuccess(res.data.user))
-            localStorage.setItem("token", res.data.token)
+            // localStorage.setItem("token", res.data.token)
             navigate("/")
 
         } catch (e) {

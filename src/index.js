@@ -6,15 +6,19 @@ import App from './App';
 import { store } from './redux/store';
 import { persistStore } from "redux-persist"
 import axios from 'axios';
+import { logOut } from './redux/userSlice';
 
+axios.defaults.withCredentials = true;
 
-axios.interceptors.request.use(request => {
-  request.headers.token = localStorage.getItem("token")
-  return request;
-})
-axios.interceptors.response.use(response => {
-  // console.log(response);
-  return response;
+const { dispatch } = store;
+console.log(dispatch);
+
+axios.interceptors.response.use(res => res, error => {
+  if (error.response.status === 401) {
+    console.log("logout");
+    dispatch(logOut())
+  }
+  return Promise.reject(error);
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
