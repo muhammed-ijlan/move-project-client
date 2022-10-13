@@ -1,9 +1,7 @@
-import { Stack, Paper, Avatar, Typography, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Card, CardActionArea, CardMedia, CardContent, Grid, MenuList, MenuItem, ListItemIcon, Divider, ListItemText } from '@mui/material'
+import { Stack, Paper, Avatar, Typography, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Card, CardActionArea, CardMedia, CardContent, Grid, } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom";
 import axios from "axios"
-import { Cloud, ContentCopy, ContentCut, ContentPaste } from '@mui/icons-material';
 
 function Profile() {
     const { id } = useParams()

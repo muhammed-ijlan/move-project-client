@@ -1,10 +1,9 @@
-import { Box, Button, Card, CardContent, CardMedia, IconButton, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { addToList } from '../redux/userSlice'
-import { FavoriteBorder, FavoriteRounded } from '@mui/icons-material'
 
 
 function Movie() {

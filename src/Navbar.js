@@ -1,5 +1,5 @@
 import { Movie } from '@mui/icons-material'
-import { AppBar, Container, Toolbar, styled, Typography, Box, InputBase, Button, IconButton, Avatar, Menu, MenuItem } from '@mui/material'
+import { AppBar, Container, Toolbar, styled, Typography, Box, InputBase, Button, IconButton, Avatar, } from '@mui/material'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
