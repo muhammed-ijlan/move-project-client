@@ -11,7 +11,6 @@ import { logOut } from './redux/userSlice';
 axios.defaults.withCredentials = true;
 
 const { dispatch } = store;
-console.log(dispatch);
 
 axios.interceptors.response.use(res => res, error => {
   if (error.response.status === 401) {

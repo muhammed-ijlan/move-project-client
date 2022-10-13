@@ -13,7 +13,6 @@ function Signin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { isLoading, currentUser } = useSelector((state) => state.user)
 
     const signUser = async (e) => {
         e.preventDefault();
@@ -23,7 +22,6 @@ function Signin() {
                 { withCredentials: true }
             )
             dispatch(loginSuccess(res.data.user))
-            // localStorage.setItem("token", res.data.token)
             navigate("/")
 
         } catch (e) {
@@ -43,8 +41,7 @@ function Signin() {
 
                         <TextField required onChange={(e) => setEmail(e.target.value)} fullWidth color='info' name='email' type="email" label="Email" id="fullWidth" />
                         <TextField required helperText="" onChange={(e) => setPassword(e.target.value)} fullWidth color='info' name='password' type="password" label="Password" id="fullWidth" />
-                        {isLoading && <Button type='submit' variant='contained' color='success' fullWidth>Loading...</Button>}
-                        {!isLoading && <Button type='submit' variant='contained' color='success' fullWidth>LogiIn</Button>}
+                        <Button type='submit' variant='contained' color='success' fullWidth>Login</Button>
                     </Stack>
                 </form>
                 <Typography variant='body2' marginTop={1}>Dont Have an Account? <Link to="/signup">SignUp</Link></Typography>

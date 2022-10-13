@@ -14,8 +14,8 @@ const movieSlice = createSlice({
             state.isLoading = true
         },
         fetchMovieSuccess: (state, action) => {
-            state.isLoading = false;
             state.movies = action.payload;
+            state.isLoading = false;
         },
         fetchMovieFailure: (state) => {
             state.isLoading = false;

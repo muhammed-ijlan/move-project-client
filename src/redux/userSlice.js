@@ -4,7 +4,6 @@ import axios from "axios";
 const initialState = {
     currentUser: null,
     isLoading: false,
-    token: null,
 }
 
 const userSlice = createSlice({
@@ -22,13 +21,10 @@ const userSlice = createSlice({
             state.currentUser = null;
             state.isLoading = false;
         },
-        logOut: async (state) => {
+        logOut: (state) => {
             state.currentUser = null;
             state.isLoading = false;
             state.token = null;
-        },
-        setToken: (state, action) => {
-            state.token = action.payload;
         },
         addToList: (state, action) => {
             if (state.currentUser.movieList.includes(action.payload)) {

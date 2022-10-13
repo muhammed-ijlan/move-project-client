@@ -1,10 +1,11 @@
-import { Pagination, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, Pagination, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import "./App.css"
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovieFailure, fetchMovieStart, fetchMovieSuccess } from "./redux/movieSlice"
 import { Link } from "react-router-dom"
+import { Stack } from '@mui/system';
 
 
 function MovieCard() {
@@ -29,28 +30,46 @@ function MovieCard() {
             }
         }
         fetchMovies();
-    }, [limit, page])
+    }, [limit, page, dispatch])
     return (
-        <div className=''>
-            <div className='card_wrapper'>
+        <Stack display="flex" direction="column" alignItems="center" spacing={4}>
+
+            <Grid container spacing={2}>
+
                 {Array.isArray(movies) &&
                     movies?.map((movie) => (
-                        <Link to={`movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                            <div className='card'>
-                                <div className='card_body'>
-                                    <img className='card_img' alt='movieImage' src={movie.image} />
-                                    <Typography py={1} px={2} variant='h5'>{movie.movieName}</Typography>
-                                </div>
-                                <button className='card_btn'>View Movie</button>
-                            </div>
-                        </Link>
+                        <Grid item xs={12} sm={3} md={3} >
+
+                            <Link to={`movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                                <Card sx={{ maxWidth: 345, minHeight: 380 }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="250"
+                                        image={movie.image}
+                                        alt="green iguana"
+                                    />
+
+                                    <CardContent>
+
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            {movie.movieName}
+                                        </Typography>
+
+                                        <CardActions>
+                                            <Button size="medium" fullWidth variant='outlined' color='success'>
+                                                View Movie
+                                            </Button>
+                                        </CardActions>
+
+                                    </CardContent>
+                                </Card>
+                            </Link>
+                        </Grid>
                     ))
                 }
-            </div>
-            <div style={{ padding: "100px" }}>
-                <Pagination sx={{ marginLeft: '400px' }} onChange={(e, value) => setPage(value)} count={count} page={page} variant="outlined" size='large' />
-            </div>
-        </div>
+            </Grid>
+            <Pagination onChange={(e, value) => setPage(value)} count={count} page={page} variant="outlined" size='large' />
+        </Stack>
     )
 }
 

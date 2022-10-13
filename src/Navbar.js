@@ -67,7 +67,10 @@ function Navbar() {
                             <Movie />  movieDB
                         </Typography>
                     </Link>
-                    <Movie sx={{ display: { xs: "block", sm: "none" } }} />
+                    <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+
+                        <Movie sx={{ display: { xs: "block", sm: "none" } }} />
+                    </Link>
                     <Search>
                         <InputBase onChange={(e) => setInput(e.target.value)} placeholder='search...' />
                     </Search>
@@ -103,10 +106,12 @@ function Navbar() {
 
                         </Icons>
                     }
-                    <UserBox sx={{ display: { sm: "none", xs: "flex" } }}>
-                        <Avatar />
-                        <Typography variant='span'>{currentUser?.fullname}</Typography>
-                    </UserBox>
+                    <Link to={`/user/${currentUser._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <UserBox sx={{ display: { sm: "none", xs: "flex" } }}>
+                            <Avatar />
+                            <Typography variant='span'>{currentUser?.fullname}</Typography>
+                        </UserBox>
+                    </Link>
                 </StyledToolbar>
 
 
