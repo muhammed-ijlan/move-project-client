@@ -1,5 +1,4 @@
 import { Box, Container, } from "@mui/material";
-import Main from "./Main";
 import Navbar from "./Navbar";
 import { Route, Routes, BrowserRouter } from "react-router-dom"
 import Profile from "./pages/Profile";
