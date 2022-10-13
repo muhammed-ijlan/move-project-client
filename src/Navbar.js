@@ -106,7 +106,7 @@ function Navbar() {
 
                         </Icons>
                     }
-                    <Link to={`/user/${currentUser._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                    <Link to={`/user/${currentUser?._id}`} style={{ textDecoration: "none", color: "inherit" }}>
                         <UserBox sx={{ display: { sm: "none", xs: "flex" } }}>
                             <Avatar />
                             <Typography variant='span'>{currentUser?.fullname}</Typography>

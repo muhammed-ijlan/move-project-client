@@ -9,6 +9,7 @@ function Signin() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errMsg, setErrMsg] = useState("")
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -18,14 +19,14 @@ function Signin() {
         e.preventDefault();
         try {
             dispatch(loginStart())
-            const res = await axios.post("http://localhost:4000/auth/signin", { email, password },
-                { withCredentials: true }
+            const res = await axios.post("http://localhost:4000/auth/signin", { email, password }
             )
             dispatch(loginSuccess(res.data.user))
             navigate("/")
 
         } catch (e) {
             console.log(e);
+            setErrMsg(e.response.data.message)
             dispatch(loginFailure())
         }
     }
@@ -39,8 +40,9 @@ function Signin() {
                 <form onSubmit={signUser}>
                     <Stack spacing={4} sx={{ mt: "20px" }} color="white">
 
-                        <TextField required onChange={(e) => setEmail(e.target.value)} fullWidth color='info' name='email' type="email" label="Email" id="fullWidth" />
-                        <TextField required helperText="" onChange={(e) => setPassword(e.target.value)} fullWidth color='info' name='password' type="password" label="Password" id="fullWidth" />
+                        <TextField onChange={(e) => setEmail(e.target.value)} fullWidth color='info' name='email' type="email" label="Email" id="fullWidth" />
+                        <TextField helperText="" onChange={(e) => setPassword(e.target.value)} fullWidth color='info' name='password' type="password" label="Password" id="fullWidth" />
+                        <Typography color="error" variant='p'>{errMsg}</Typography>
                         <Button type='submit' variant='contained' color='success' fullWidth>Login</Button>
                     </Stack>
                 </form>

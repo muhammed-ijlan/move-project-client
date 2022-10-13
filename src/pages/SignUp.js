@@ -1,26 +1,35 @@
-import { Grid, Paper, Stack, TextField, Typography, Button } from '@mui/material'
+import { Grid, Paper, Stack, TextField, Typography, Button, FormHelperText } from '@mui/material'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+
 
 function SignUp() {
 
     const [fullname, setFullname] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [errMsg, setErrMsg] = useState("")
+
 
     const navigate = useNavigate()
 
     const signUpHandler = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:4000/auth/register", { fullname, email, password })
+            const res = await axios.post("http://localhost:4000/auth/register", { fullname, email, password })
+
             navigate("/signin")
         } catch (e) {
-            console.log(e);
+            // if (e.status === 403) {
+            console.log(e.response.data);
+            setErrMsg(e.response.data)
+            // }
         }
     }
+
+    console.log(errMsg);
 
     return (
 
@@ -31,10 +40,14 @@ function SignUp() {
                 </Stack>
                 <form onSubmit={signUpHandler}>
 
+
                     <Stack spacing={4} sx={{ mt: "20px" }} color="white">
-                        <TextField onChange={(e) => setFullname(e.target.value)} name="fullname" required fullWidth color='info' type="text" label="Full Name" id="fullWidth" />
-                        <TextField onChange={(e) => setEmail(e.target.value)} name="email" required fullWidth color='info' type="email" label="Email" id="fullWidth" />
-                        <TextField onChange={(e) => setPassword(e.target.value)} name="password" required fullWidth color='info' type="password" label="Password" id="fullWidth" />
+                        <TextField onChange={(e) => setFullname(e.target.value)} name="fullname" fullWidth color='info' type="text" label="Full Name" id="fullWidth" />
+                        <TextField
+                            onChange={(e) => setEmail(e.target.value)} name="email" fullWidth color='info' type="email" label="Email" id="fullWidth" />
+                        <TextField
+                            onChange={(e) => setPassword(e.target.value)} name="password" fullWidth color='info' type="password" label="Password" id="fullWidth" />
+                        <Typography component="p" variant='pre' color="error">{errMsg}</Typography>
                         <Button type='submit' variant='contained' color='success' fullWidth>SignUp</Button>
                     </Stack>
                 </form>
