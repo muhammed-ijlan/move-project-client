@@ -1,8 +1,9 @@
-import { Stack, Paper, Avatar, Typography, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Card, CardActionArea, CardMedia, CardContent } from '@mui/material'
+import { Stack, Paper, Avatar, Typography, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Card, CardActionArea, CardMedia, CardContent, Grid, MenuList, MenuItem, ListItemIcon, Divider, ListItemText } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux"
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios"
+import { Cloud, ContentCopy, ContentCut, ContentPaste } from '@mui/icons-material';
 
 function Profile() {
     const { id } = useParams()
@@ -27,9 +28,9 @@ function Profile() {
         <Stack>
 
             <Stack>
-                <Typography textAlign="center" marginBottom={3} variant='h4'>Hai {userdata.fullname}</Typography>
-                <TableContainer component={Paper} elevation={10}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Typography textAlign="center" marginBottom={3} variant='h4'>Profile</Typography>
+                <TableContainer component={Paper} elevation={10} >
+                    <Table sx={{ minWidth: { sx: 650, sm: 1000 }, }} aria-label="simple table" >
                         <TableHead>
                             <TableRow>
                                 <TableCell>Avatar</TableCell>
@@ -51,33 +52,34 @@ function Profile() {
                     </Table>
                 </TableContainer>
             </Stack>
-            <Typography margin={3} textAlign="center" variant='h5'>My Movie List</Typography>
-            {/* CARD */}
-            <Stack spacing={2} display="flex" direction="row">
+            <Typography margin={3} textAlign="center" variant='h5'>Your Movie List</Typography>
 
+            <Grid spacing={2} container alignItems="center">
                 {Array.isArray(movieList) &&
                     movieList.map((movie) => (
-                        <Stack>
-                            <Card sx={{ maxWidth: 200 }}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        height="240"
-                                        image={movie.image}
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            {movie.movieName}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
-                        </Stack>
+                        <Grid item sm={3} xs={12}>
+                            <Link to={`/movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                                <Card sx={{ minWidth: 250, minHeight: 300 }}>
+                                    <CardActionArea>
+                                        <CardMedia
+                                            component="img"
+                                            height="240"
+                                            image={movie.image}
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {movie.movieName}
+                                            </Typography>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Link>
+                        </Grid>
                     ))
                 }
 
-            </Stack>
-        </Stack >
+            </Grid>
+        </Stack>
     )
 }
 
