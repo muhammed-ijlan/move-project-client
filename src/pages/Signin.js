@@ -11,6 +11,7 @@ function Signin() {
     const [password, setPassword] = useState("");
     const [errMsg, setErrMsg] = useState("")
 
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -19,8 +20,10 @@ function Signin() {
         e.preventDefault();
         try {
             dispatch(loginStart())
-            const res = await axios.post("http://localhost:4000/auth/signin", { email, password }
+            const res = await axios.post("http://localhost:4000/auth/signin", { email, password }, { withCredentials: true }
             )
+            console.log(res.data);
+            localStorage.setItem("token", res.data.token)
             dispatch(loginSuccess(res.data.user))
             navigate("/")
 
@@ -30,6 +33,7 @@ function Signin() {
             dispatch(loginFailure())
         }
     }
+
 
     return (
         <Grid container>

@@ -18,14 +18,12 @@ function SignUp() {
     const signUpHandler = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:4000/auth/register", { fullname, email, password })
+            await axios.post("http://localhost:4000/auth/register", { fullname, email, password }, { withCredentials: true })
 
             navigate("/signin")
         } catch (e) {
-            // if (e.status === 403) {
             console.log(e.response.data);
             setErrMsg(e.response.data)
-            // }
         }
     }
 

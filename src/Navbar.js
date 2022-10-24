@@ -43,20 +43,20 @@ function Navbar() {
 
     useEffect(() => {
         const fetchMovie = async () => {
-            const res = await axios.get(`http://localhost:4000/movie/?search=${input}`)
+            const res = await axios.get(`http://localhost:4000/movie/?search=${input}`, { withCredentials: true })
             dispatch(fetchMovieSuccess(res.data.movie));
         }
         fetchMovie();
     }, [input, dispatch])
 
     const logoutHandler = async () => {
-        await axios.get("http://localhost:4000/auth/logout")
+        await axios.get("http://localhost:4000/auth/logout", { withCredentials: true })
 
         dispatch(logOut())
         localStorage.clear();
         navigate("/signin")
     }
-
+    console.log(currentUser);
     return (
         <AppBar sx={{ background: "#06283D" }} position="sticky">
             <Container>
@@ -84,7 +84,7 @@ function Navbar() {
                                 </IconButton>
 
                             </Icons>
-                            <Link to={`/user/${currentUser._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            <Link to={`/user/${currentUser?._id}`} style={{ textDecoration: "none", color: "inherit" }}>
                                 <UserBox sx={{ display: { xs: "none", sm: "flex" } }}>
                                     <Avatar />
                                     <Typography variant='span'>{currentUser?.fullname}</Typography>

@@ -62,7 +62,7 @@ function Profile() {
                                         <CardMedia
                                             component="img"
                                             height="240"
-                                            image={movie.image}
+                                            image={`http://localhost:4000/${movie.image}`}
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="div">

@@ -24,6 +24,7 @@ const userSlice = createSlice({
             state.currentUser = null;
             state.isLoading = false;
             state.token = null;
+            localStorage.clear();
         },
         addToList: (state, action) => {
             if (state.currentUser.movieList.includes(action.payload)) {

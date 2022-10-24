@@ -16,7 +16,7 @@ function Movie() {
 
     useEffect(() => {
         const fetchMovie = async () => {
-            const res = await axios.get(`http://localhost:4000/movie/${id}`)
+            const res = await axios.get(`http://localhost:4000/movie/${id}`, { withCredentials: true })
             setMovie(res.data)
         }
         fetchMovie()
@@ -56,7 +56,7 @@ function Movie() {
             <CardMedia
                 component="img"
                 sx={{ width: 301, display: { xs: "none", sm: "block" } }}
-                image={movie !== null && movie.image}
+                image={movie !== null && `http://localhost:4000/${movie.image}`}
                 alt="Live from space album cover"
             />
         </Card>
