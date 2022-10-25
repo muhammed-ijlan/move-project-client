@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp"
 import Movie from "./pages/Movie";
 import { useSelector } from "react-redux"
 import MovieCard from "./Card";
+import Charts from "./Charts";
 
 function App() {
   const { currentUser } = useSelector((state) => state.user)
@@ -23,6 +24,7 @@ function App() {
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
               <Route path="movie/:id" element={currentUser ? <Movie /> : <SignIn />} />
+              <Route path="/charts" element={<Charts />} />
             </Route>
 
           </Routes>

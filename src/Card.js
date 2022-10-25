@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Modal, Pagination, TextField, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./App.css"
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux";
@@ -17,9 +17,12 @@ function MovieCard() {
     const [desc, setDesc] = useState("")
     const [fileInput, setFileInput] = useState("")
 
+
     const formData = new FormData();
 
     const dispatch = useDispatch();
+    const { currentUser } = useSelector((state) => state.user)
+    console.log(currentUser.isAdmin);
     const { movies } = useSelector((state) => state.movie)
 
     const fetchMovies = async () => {
@@ -28,7 +31,8 @@ function MovieCard() {
             const res = await axios.get(`http://localhost:4000/movie/?limit=${limit}&page=${page}`, { withCredentials: true })
             dispatch(fetchMovieSuccess(res.data.movie))
             setLimit(res.data.limit)
-            setCount(Math.round(res.data.total / limit))
+            console.log(Math.ceil(res.data.total / limit));
+            setCount(Math.ceil(res.data.total / limit))
         } catch (e) {
             console.log(e);
             dispatch(fetchMovieFailure())
@@ -61,12 +65,18 @@ function MovieCard() {
     formData.append("movie", fileInput)
     formData.append("movieName", movie)
     formData.append("desc", desc)
+    const inputRef = useRef();
+
 
     const createMovie = async (e) => {
         e.preventDefault();
         try {
             await axios.post("http://localhost:4000/movie/create", formData)
             fetchMovies();
+            setMovie("")
+            setDesc("")
+            inputRef.current.value = null
+
             setOpen(false)
         } catch (e) {
             console.log(e);
@@ -75,11 +85,13 @@ function MovieCard() {
 
     return (
         <>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Button onClick={exportClickHandler} variant='contained' sx={{ alignItems: "end" }}>📁Export as excel file</Button>
-
-                <Button variant='contained' onClick={handleOpen}>➕Create New</Button>
-            </div>
+            {
+                currentUser.isAdmin &&
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <Button onClick={exportClickHandler} variant='contained' sx={{ alignItems: "end" }}>📁Export as excel file</Button>
+                    <Button variant='contained' onClick={handleOpen}>➕Create New</Button>
+                </div>
+            }
             <Modal
                 keepMounted
                 open={open}
@@ -89,9 +101,9 @@ function MovieCard() {
             >
                 <Box sx={style} >
                     <form onSubmit={createMovie} style={{ padding: "5px", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
-                        <TextField onChange={(e) => setMovie(e.target.value)} required id="fullwidth" label="Movie Name" fullWidth variant="outlined" name='movieName' />
-                        <input onChange={(e) => setFileInput(e.target.files[0])} style={{ margin: "10px" }} type="file" required />
-                        <TextField onChange={(e) => setDesc(e.target.value)} name='desc'
+                        <TextField value={movie} onChange={(e) => setMovie(e.target.value)} required id="fullwidth" label="Movie Name" fullWidth variant="outlined" name='movieName' />
+                        <input ref={inputRef} onChange={(e) => setFileInput(e.target.files[0])} style={{ margin: "10px" }} type="file" required />
+                        <TextField value={desc} onChange={(e) => setDesc(e.target.value)} name='desc'
                             id="standard-multiline-flexible"
                             label="Description"
                             multiline
@@ -109,7 +121,7 @@ function MovieCard() {
 
                     {Array.isArray(movies) &&
                         movies?.map((movie) => (
-                            <Grid item xs={12} sm={3} md={3} >
+                            <Grid item xs={12} sm={3} md={3} key={movie._id}>
 
                                 <Link to={`movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
                                     <Card sx={{ maxWidth: 345, minHeight: 380 }}>
