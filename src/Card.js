@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchMovieFailure, fetchMovieStart, fetchMovieSuccess } from "./redux/movieSlice"
 import { Link } from "react-router-dom"
 import { Stack } from '@mui/system';
+import { ClipLoader } from 'react-spinners';
 
 
 function MovieCard() {
@@ -22,7 +23,7 @@ function MovieCard() {
 
     const dispatch = useDispatch();
     const { currentUser } = useSelector((state) => state.user)
-    const { movies } = useSelector((state) => state.movie)
+    const { movies, isLoading } = useSelector((state) => state.movie)
 
     const fetchMovies = async () => {
         try {
@@ -80,11 +81,10 @@ function MovieCard() {
             console.log(e);
         }
     }
-
     return (
         <>
             {
-                currentUser.isAdmin &&
+                currentUser.isAdmin && !isLoading &&
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <Button onClick={exportClickHandler} variant='contained' sx={{ alignItems: "end" }}>📁Export as excel file</Button>
                     <Button variant='contained' onClick={handleOpen}>➕Create New</Button>
@@ -112,45 +112,49 @@ function MovieCard() {
                     </form>
                 </Box>
             </Modal>
+            {!isLoading ?
 
-            <Stack display="flex" direction="column" alignItems="center" sx={{ marginTop: "50px" }} spacing={4}>
+                <Stack display="flex" direction="column" alignItems="center" sx={{ marginTop: "50px" }} spacing={4}>
+                    <Grid container spacing={2}>
 
-                <Grid container spacing={2}>
+                        {Array.isArray(movies) &&
+                            movies?.map((movie) => (
+                                <Grid item xs={12} sm={3} md={3} key={movie._id}>
 
-                    {Array.isArray(movies) &&
-                        movies?.map((movie) => (
-                            <Grid item xs={12} sm={3} md={3} key={movie._id}>
+                                    <Link to={`movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                                        <Card sx={{ maxWidth: 345, minHeight: 380 }}>
+                                            <CardMedia
+                                                component="img"
+                                                height="250"
+                                                image={`http://localhost:4000/${movie.image}`}
+                                                alt="movieImage"
+                                            />
 
-                                <Link to={`movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                    <Card sx={{ maxWidth: 345, minHeight: 380 }}>
-                                        <CardMedia
-                                            component="img"
-                                            height="250"
-                                            image={`http://localhost:4000/${movie.image}`}
-                                            alt="movieImage"
-                                        />
+                                            <CardContent>
 
-                                        <CardContent>
+                                                <Typography gutterBottom variant="h5" component="div">
+                                                    {movie.movieName}
+                                                </Typography>
 
-                                            <Typography gutterBottom variant="h5" component="div">
-                                                {movie.movieName}
-                                            </Typography>
+                                                <CardActions>
+                                                    <Button size="medium" fullWidth variant='outlined' color='success'>
+                                                        View Movie
+                                                    </Button>
+                                                </CardActions>
 
-                                            <CardActions>
-                                                <Button size="medium" fullWidth variant='outlined' color='success'>
-                                                    View Movie
-                                                </Button>
-                                            </CardActions>
-
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
-                <Pagination onChange={(e, value) => setPage(value)} count={count} page={page} variant="outlined" size='large' />
-            </Stack>
+                                            </CardContent>
+                                        </Card>
+                                    </Link>
+                                </Grid>
+                            ))
+                        }
+                    </Grid>
+                    <Pagination onChange={(e, value) => setPage(value)} count={count} page={page} variant="outlined" size='large' />
+                </Stack> :
+                <div style={{ display: "flex", marginTop: 250, justifyContent: "center" }}>
+                    <ClipLoader size={100} speedMultiplier={2} loading color='#306d87' />
+                </div>
+            }
         </>
     )
 }

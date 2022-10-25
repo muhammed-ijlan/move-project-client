@@ -2,8 +2,9 @@ import { Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch, } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { loginFailure, loginStart, loginSuccess, } from '../redux/userSlice'
+import { ClipLoader } from 'react-spinners';
 
 function Signin() {
 
@@ -15,6 +16,7 @@ function Signin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const { isLoading } = useSelector((state) => state.user)
 
     const signUser = async (e) => {
         e.preventDefault();
@@ -34,7 +36,7 @@ function Signin() {
         }
     }
 
-
+    console.log(isLoading);
     return (
         <Grid container>
             <Paper elevation={10} sx={{ padding: "20px", height: "45vh", width: "300px", margin: "auto", borderRadius: "10px" }}>
@@ -47,12 +49,21 @@ function Signin() {
                         <TextField onChange={(e) => setEmail(e.target.value)} fullWidth color='info' name='email' type="email" label="Email" id="fullWidth" />
                         <TextField helperText="" onChange={(e) => setPassword(e.target.value)} fullWidth color='info' name='password' type="password" label="Password" id="fullWidth" />
                         <Typography color="error" variant='p'>{errMsg}</Typography>
-                        <Button type='submit' variant='contained' color='success' fullWidth>Login</Button>
+                        {!isLoading ?
+                            <Button type='submit' variant='contained' color='success' fullWidth>Login</Button> :
+                            <Button type='submit' variant='contained' color='success' fullWidth>
+                                <ClipLoader
+                                    color="#ffffff"
+                                    loading
+                                    size={20}
+                                    speedMultiplier={2}
+                                /></Button>
+                        }
                     </Stack>
                 </form>
                 <Typography variant='body2' marginTop={1}>Dont Have an Account? <Link to="/signup">SignUp</Link></Typography>
             </Paper>
-        </Grid >
+        </Grid>
     )
 }
 

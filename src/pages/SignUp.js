@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+import { ClipLoader } from 'react-spinners';
 
 
 function SignUp() {
@@ -11,17 +12,20 @@ function SignUp() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [errMsg, setErrMsg] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
 
     const navigate = useNavigate()
 
     const signUpHandler = async (e) => {
         e.preventDefault();
+        setIsLoading(true)
         try {
             await axios.post("http://localhost:4000/auth/register", { fullname, email, password }, { withCredentials: true })
-
+            setIsLoading(false)
             navigate("/signin")
         } catch (e) {
+            setIsLoading(false)
             console.log(e.response.data);
             setErrMsg(e.response.data)
         }
@@ -46,7 +50,16 @@ function SignUp() {
                         <TextField
                             onChange={(e) => setPassword(e.target.value)} name="password" fullWidth color='info' type="password" label="Password" id="fullWidth" />
                         <Typography component="p" variant='pre' color="error">{errMsg}</Typography>
-                        <Button type='submit' variant='contained' color='success' fullWidth>SignUp</Button>
+                        {!isLoading ?
+                            <Button type='submit' variant='contained' color='success' fullWidth>SignUp</Button> :
+                            <Button type='submit' variant='contained' color='success' fullWidth>
+                                <ClipLoader
+                                    color="#ffffff"
+                                    loading
+                                    size={20}
+                                    speedMultiplier={2}
+                                /></Button>
+                        }
                     </Stack>
                 </form>
                 <Typography variant='body2' marginTop={1}>Already Have an Account? <Link to="/signin">SignIn</Link></Typography>

@@ -74,7 +74,7 @@ function Movie() {
                     alt="Live from space album cover"
                 />
             </> : <div style={{ marginLeft: "auto", marginRight: "auto" }}>
-                <FadeLoader color="#36d7b7" />
+                <FadeLoader loading color="hsla(209, 45%, 40%, 1)" />
             </div>
             }
         </Card >
