@@ -22,7 +22,6 @@ function MovieCard() {
 
     const dispatch = useDispatch();
     const { currentUser } = useSelector((state) => state.user)
-    console.log(currentUser.isAdmin);
     const { movies } = useSelector((state) => state.movie)
 
     const fetchMovies = async () => {
@@ -31,7 +30,6 @@ function MovieCard() {
             const res = await axios.get(`http://localhost:4000/movie/?limit=${limit}&page=${page}`, { withCredentials: true })
             dispatch(fetchMovieSuccess(res.data.movie))
             setLimit(res.data.limit)
-            console.log(Math.ceil(res.data.total / limit));
             setCount(Math.ceil(res.data.total / limit))
         } catch (e) {
             console.log(e);

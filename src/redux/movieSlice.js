@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     isLoading: false,
-    movies: null,
-    isLoading: false,
+    movies: {},
     currentMovie: []
 }
 
