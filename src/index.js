@@ -9,13 +9,7 @@ import axios from 'axios';
 import { logOut } from './redux/userSlice';
 
 axios.defaults.withCredentials = true;
-// axios.defaults.headers.common['token'] = localStorage.getItem("token")
 const { dispatch } = store;
-
-// axios.interceptors.request.use(req => {
-//   req.headers. = localStorage.getItem("token")
-//   return req;
-// })
 
 axios.interceptors.response.use(undefined, error => {
   console.log(error.response);

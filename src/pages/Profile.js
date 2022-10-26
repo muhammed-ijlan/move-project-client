@@ -1,4 +1,4 @@
-import { Stack, Paper, Avatar, Typography, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Card, CardActionArea, CardMedia, CardContent, Grid, } from '@mui/material'
+import { Stack, Paper, Avatar, Typography, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Card, CardActionArea, CardMedia, CardContent, Grid, Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from "react-router-dom";
 import axios from "axios"
@@ -27,81 +27,87 @@ function Profile() {
         }
     }, [id])
     return (
-        <Stack>
+        <Container sx={{ mt: 4 }}>
 
             <Stack>
-                <Typography textAlign="center" marginBottom={3} variant='h4'>Profile</Typography>
-                <TableContainer component={Paper} elevation={10} >
-                    {!isLoading ?
-                        <Table sx={{ minWidth: { sx: 650, sm: 1000 }, }} aria-label="simple table" >
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Avatar</TableCell>
-                                    <TableCell align="right">FullName</TableCell>
-                                    <TableCell align="right">Email address</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        <Avatar>{userdata.fullname}</Avatar>
-                                    </TableCell>
-                                    <TableCell align="right">{userdata.fullname}</TableCell>
-                                    <TableCell align="right">{userdata.email}</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table> :
-                        <Paper sx={{ display: "flex", justifyContent: "center", padding: "50px" }}>
 
-                            <PulseLoader
-                                color="#265d86"
-                                loading
-                                speedMultiplier={2}
-                            />
-                        </Paper>
-                    }
-                </TableContainer>
+                <Stack>
+                    <Typography color="white" textAlign="center" marginBottom={3} variant='h4'>Profile</Typography>
+                    <TableContainer component={Paper} elevation={10} >
+                        {!isLoading ?
+                            <Table sx={{ minWidth: { sx: 650, sm: 1000 }, }} aria-label="simple table" >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Avatar</TableCell>
+                                        <TableCell></TableCell>
+                                        <TableCell align="center">FullName</TableCell>
+                                        <TableCell align="right">Email address</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            <Avatar>{userdata.fullname}</Avatar>
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">
+                                        </TableCell>
+                                        <TableCell align="center">{userdata.fullname}</TableCell>
+                                        <TableCell align="right">{userdata.email}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table> :
+                            <Paper sx={{ display: "flex", justifyContent: "center", padding: "50px" }}>
+
+                                <PulseLoader
+                                    color="black"
+                                    loading
+                                    speedMultiplier={2}
+                                />
+                            </Paper>
+                        }
+                    </TableContainer>
+                </Stack>
+                <Typography color="white" margin={3} textAlign="center" variant='h5'>Your Movie List</Typography>
+
+                {!isLoading ?
+                    <Grid spacing={2} container alignItems="center">
+                        {Array.isArray(movieList) &&
+                            movieList.map((movie) => (
+                                <Grid item sm={3} xs={12}>
+                                    <Link to={`/movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                                        <Card sx={{ minWidth: 250, minHeight: 300 }}>
+                                            <CardActionArea>
+                                                <CardMedia
+                                                    component="img"
+                                                    height="240"
+                                                    image={`http://localhost:4000/${movie.image}`}
+                                                />
+                                                <CardContent>
+                                                    <Typography gutterBottom variant="h5" component="div">
+                                                        {movie.movieName}
+                                                    </Typography>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </Link>
+                                </Grid>
+                            ))
+                        }
+
+                    </Grid> :
+                    <Grid sx={{ display: "flex", justifyContent: "center", padding: "50px" }}>
+
+                        <MoonLoader
+                            color="white"
+                            loading
+                            speedMultiplier={1}
+                        />
+                    </Grid>
+                }
             </Stack>
-            <Typography margin={3} textAlign="center" variant='h5'>Your Movie List</Typography>
-
-            {!isLoading ?
-                <Grid spacing={2} container alignItems="center">
-                    {Array.isArray(movieList) &&
-                        movieList.map((movie) => (
-                            <Grid item sm={3} xs={12}>
-                                <Link to={`/movie/${movie._id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                    <Card sx={{ minWidth: 250, minHeight: 300 }}>
-                                        <CardActionArea>
-                                            <CardMedia
-                                                component="img"
-                                                height="240"
-                                                image={`http://localhost:4000/${movie.image}`}
-                                            />
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h5" component="div">
-                                                    {movie.movieName}
-                                                </Typography>
-                                            </CardContent>
-                                        </CardActionArea>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                        ))
-                    }
-
-                </Grid> :
-                <Grid sx={{ display: "flex", justifyContent: "center", padding: "50px" }}>
-
-                    <MoonLoader
-                        color="#0299d0"
-                        loading
-                        speedMultiplier={1}
-                    />
-                </Grid>
-            }
-        </Stack>
+        </Container>
     )
 }
 

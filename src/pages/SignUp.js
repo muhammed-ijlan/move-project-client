@@ -35,7 +35,7 @@ function SignUp() {
 
     return (
 
-        <Grid container>
+        <Grid container sx={{ height: "90vh" }}>
             <Paper elevation={10} sx={{ padding: "20px", height: "60vh", width: "300px", margin: "auto", borderRadius: "10px" }}>
                 <Stack display='flex' alignItems="center">
                     <Typography variant='h5'>SignUp</Typography>

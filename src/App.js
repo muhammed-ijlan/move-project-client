@@ -13,22 +13,22 @@ function App() {
   const { currentUser } = useSelector((state) => state.user)
   return (
     <BrowserRouter>
-      <Box >
+      <Box sx={{ backgroundColor: "#16213E", }}>
         <Navbar />
-        <Container sx={{ mt: 5 }}>
-          <Routes>
+        {/* <Container sx={{ mt: 2 }}> */}
+        <Routes>
 
-            <Route path="/">
-              <Route index element={<MovieCard />} />
-              <Route path="user/:id" element={currentUser ? <Profile /> : <SignIn />} />
-              <Route path="signin" element={<SignIn />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route path="movie/:id" element={currentUser ? <Movie /> : <SignIn />} />
-              <Route path="/charts" element={<Charts />} />
-            </Route>
+          <Route path="/">
+            <Route index element={<MovieCard />} />
+            <Route path="user/:id" element={currentUser ? <Profile /> : <SignIn />} />
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="movie/:id" element={currentUser ? <Movie /> : <SignIn />} />
+            <Route path="/charts" element={<Charts />} />
+          </Route>
 
-          </Routes>
-        </Container>
+        </Routes>
+        {/* </Container> */}
       </Box>
     </BrowserRouter>
   );
