@@ -9,6 +9,9 @@ import { useSelector } from "react-redux"
 import MovieCard from "./Card";
 import Charts from "./Charts";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 function App() {
   const { currentUser } = useSelector((state) => state.user)
   return (

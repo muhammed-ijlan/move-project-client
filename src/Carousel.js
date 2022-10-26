@@ -22,6 +22,11 @@ function Carousel() {
 
                     <img className={style.swiperImage} src='https://cdn.wallpapersafari.com/96/89/4ymkze.jpg' />
                 </SwiperSlide>
+
+                <SwiperSlide>
+
+                    <img className={style.swiperImage} src='https://goggler.my/wp-content/uploads/2019/12/JM2_INTL_30Sht_BRIDGE_03-e1575889045252.jpg' />
+                </SwiperSlide>
                 <SwiperSlide>
 
                     <img className={style.swiperImage} src='https://wallpapercave.com/wp/wp6157135.jpg' />

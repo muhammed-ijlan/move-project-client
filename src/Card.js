@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 import { Stack } from '@mui/system';
 import { ClipLoader } from 'react-spinners';
 import Carousel from './Carousel';
+import MovieSlider from './MovieSlider';
 
 
 function MovieCard() {
@@ -116,6 +117,7 @@ function MovieCard() {
             {!isLoading ?
                 <>
                     <Carousel />
+                    <MovieSlider />
                     <Container sx={{ mt: 5 }}>
                         <Typography variant="h4" color="white">Popular Movies</Typography>
                         <Stack display="flex" direction="column" alignItems="center" sx={{ marginTop: "10px" }} spacing={4}>
