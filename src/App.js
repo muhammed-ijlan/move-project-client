@@ -11,6 +11,7 @@ import Charts from "./Charts";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import StepperComponent from "./Stepper";
 
 function App() {
   const { currentUser } = useSelector((state) => state.user)
@@ -28,6 +29,7 @@ function App() {
             <Route path="signup" element={<SignUp />} />
             <Route path="movie/:id" element={currentUser ? <Movie /> : <SignIn />} />
             <Route path="/charts" element={<Charts />} />
+            <Route path="stepper" element={<StepperComponent />} />
           </Route>
 
         </Routes>

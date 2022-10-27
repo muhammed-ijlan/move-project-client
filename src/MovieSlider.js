@@ -41,9 +41,7 @@ function MovieSlider() {
         ]
     };
 
-    useEffect(() => {
 
-    }, [])
     console.log(movies);
     return (
         <div style={{ color: "white", objectFit: "cover", width: "85%", marginLeft: "auto", marginRight: "auto", }}>
@@ -52,19 +50,20 @@ function MovieSlider() {
                 <Slider {...settings}>
                     {movies.map(movie => (
 
-                        <div>
+                        <div style={{ width: "100%" }}>
                             <img style={{
                                 width: "100%",
                                 objectFit: "contain",
                                 maxHeight: "300px", padding: "2px",
+
                             }} src={`http://localhost:4000/${movie.image}`} />
                         </div>
 
                     ))}
 
                 </Slider>
-            </div >
-        </div >
+            </div>
+        </div>
 
     )
 }
